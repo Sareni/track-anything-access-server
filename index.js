@@ -10,8 +10,6 @@ const tracking = require('./tracking');
 const app = express();
 
 
-
-
 app.use(express.json());
 
 // run at 4 AM, TODO: add randomness?

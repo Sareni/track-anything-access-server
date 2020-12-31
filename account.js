@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const tracking = require('./tracking');
 const { PLANS, PLAN_PROPERTIES } = require('./constants/PLANS');
@@ -20,7 +21,7 @@ async function createAccount(data) {
 }
 
 function createAccountKey() {
-    return '123';
+    return uuidv4();
 }
 
 function getAmountDifference(oldPlan, newPlan) {
@@ -39,6 +40,7 @@ async function updateAccount(data) {
     if (user) {
         const prevPlan = user.plan;
         user.plan = plan;
+        user.updated = Date.now();
 
         const updatedUser = await user.save();
         tracking.updateTrackingAmount(account, getAmountDifference(prevPlan, plan));
