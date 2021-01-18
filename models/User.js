@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     account: String,
     plan: String,
+    userId: String,
     created: {
         type: Date,
         default: Date.now

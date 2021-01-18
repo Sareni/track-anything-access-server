@@ -6,6 +6,13 @@ const { PLANS, PLAN_PROPERTIES } = require('./constants/PLANS');
 
 const User = mongoose.model('users');
 
+async function getAccount(userId) {
+    return User.findOne({ userId });
+}
+
+async function getAccounts() {
+    return User.find();
+}
 
 async function createAccount(data) {
     // expected format
@@ -13,8 +20,9 @@ async function createAccount(data) {
         plan: 'BASIC', 'STANDARD', 'PREMIUM'
     } */
     const account = createAccountKey();
-    const plan = PLANS[data.plan];
-    const user = await new User({ account, plan }).save();
+    const plan = PLANS[data.plan || 'BASIC'];
+    const { userId } = data; // id of the user account, which the user created on the website
+    const user = await new User({ account, plan, userId }).save();
 
     tracking.updateTrackingAmount(account, PLAN_PROPERTIES[plan].trackAmount);
     return user;
@@ -53,14 +61,16 @@ async function deleteAccount(data) {
     /* {
         account: 'xxx'
     } */
-    const { account } = data;
-    const deleteUser = await User.deleteOne({ account });
-    tracking.removeUser(account);
+    const { userId } = data;
+    const deleteUser = await User.deleteOne({ userId });
+    tracking.removeUser(deleteUser.account);
     return deleteUser;
 }
 
 
 module.exports = {
+    getAccount,
+    getAccounts,
     createAccount,
     updateAccount,
     deleteAccount

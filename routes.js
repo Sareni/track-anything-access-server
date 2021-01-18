@@ -11,6 +11,14 @@ module.exports = (app) => {
         res.send();
     });
 
+    app.get('/getAccount/:userId', async (req, res) => {
+        res.send(await account.getAccount(req.params.userId));
+    });
+
+    app.get('/getAccounts', async (req, res) => {
+        res.send(await account.getAccounts());
+    });
+
     app.post('/createAccount', async (req, res) => {
         res.send(await account.createAccount(req.body));
     });
