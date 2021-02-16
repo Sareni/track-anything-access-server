@@ -19,9 +19,18 @@ schedule.scheduleJob('0 4 * * *', () => {
 
 require('./routes')(app);
 
+const connectWithRetry = async () => {
+  try {
+    return await mongoose.connect(mongodbConnectionString, { useNewUrlParser: true });
+  } catch(err) {
+      await new Promise((resolve) => setTimeout(resolve, 30000));
+      return connectWithRetry();
+  }
+};
+
 (async () => {
     try {
-      await mongoose.connect(mongodbConnectionString, { useNewUrlParser: true })
+      await connectWithRetry();
       console.log('db access');
       await tracking.initGlobalAccessList();
       console.log('list loaded');
@@ -31,7 +40,7 @@ require('./routes')(app);
     } catch (err) {
       console.log('error: ' + err)
     }
-  })()
+  })();
 
 
 
