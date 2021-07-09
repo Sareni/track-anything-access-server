@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const axios = require('axios');
 
 const { PLAN_PROPERTIES } = require('./constants/PLANS');
-const { updateGlobalAccessListURL } = require('./config/routes');
 const { hosts, port } = require('./config/http');
 
 const User = mongoose.model('users');
@@ -64,6 +63,7 @@ function removeUser(key) {
 }
 
 function updateGlobalListOnServers(update) {
+    const updateGlobalAccessListURL = '/updateGlobalAccessList';
     hosts.forEach((host) => {
         console.log(`http://${host}:${port}${updateGlobalAccessListURL}`);
         axios.post(`http://${host}:${port}${updateGlobalAccessListURL}`, update)
