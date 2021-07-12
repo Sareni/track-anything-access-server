@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const schedule = require('node-schedule');
 
-const { mongodbConnectionString } = require('./config/keys');
+const { connectionString: mongodbConnectionString } = require('./config/track_anything_access_server_config').databases.mongodb;
 
 require('./models/User');
 const tracking = require('./tracking');

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const axios = require('axios');
 
 const { PLAN_PROPERTIES } = require('./constants/PLANS');
-const { hosts, port } = require('./config/http');
+const { hosts, port } = require('./config/track_anything_access_server_config').trackingServers;
 
 const User = mongoose.model('users');
 
