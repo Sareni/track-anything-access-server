@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const axios = require('axios');
 
 const { PLAN_PROPERTIES } = require('./constants/PLANS');
-const { hosts, port } = require('./config/track_anything_access_server_config').trackingServers;
+const { trackingServers } = require('./config/track_anything_access_server_config');
 
 const User = mongoose.model('users');
 
@@ -64,11 +64,11 @@ function removeUser(key) {
 
 function updateGlobalListOnServers(update) {
     const updateGlobalAccessListURL = '/updateGlobalAccessList';
-    hosts.forEach((host) => {
-        console.log(`http://${host}:${port}${updateGlobalAccessListURL}`);
-        axios.post(`http://${host}:${port}${updateGlobalAccessListURL}`, update)
+    trackingServers.forEach((ts) => {
+        console.log(`${ts.protocol}://${ts.host}:${ts.port}${updateGlobalAccessListURL}`);
+        axios.post(`${ts.protocol}://${ts.host}:${ts.port}${updateGlobalAccessListURL}`, update)
         .catch(() => {
-            console.log('error: ', host);
+            console.log('error: ', ts);
         });
     });
 }
