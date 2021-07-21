@@ -65,7 +65,6 @@ function removeUser(key) {
 function updateGlobalListOnServers(update) {
     const updateGlobalAccessListURL = '/updateGlobalAccessList';
     trackingServers.forEach((ts) => {
-        console.log(`${ts.protocol}://${ts.host}:${ts.port}${updateGlobalAccessListURL}`);
         axios.post(`${ts.protocol}://${ts.host}:${ts.port}${updateGlobalAccessListURL}`, update)
         .catch(() => {
             console.log('error: ', ts);

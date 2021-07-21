@@ -1,24 +1,30 @@
 const PLANS = Object.freeze({
     BASIC: 'basic',
     STANDARD: 'standard',
-    PREMIUM: 'premium'
+    PREMIUM: 'premium',
+    ADMIN: 'admin'
 });
 
 const PLAN_PROPERTIES = {
     basic: {
         label: 'Basic',
-        msBetweenTracks: 60000,
-        trackAmount: 2,
+        msBetweenTracks: 1000,
+        trackAmount: 500,
     },
     standard: {
         label: 'Standard',
-        msBetweenTracks: 10000,
-        trackAmount: 5
+        msBetweenTracks: 1000,
+        trackAmount: 2000
     },
     premium: {
         label: 'Premium',
-        msBetwennTracks: 1000,
-        trackAmount: 5000
+        msBetwennTracks: 0,
+        trackAmount: 8000
+    },
+    admin: {
+        label: 'Admin',
+        msBetwennTracks: 0,
+        trackAmount: 1000000000
     }
 }
 
