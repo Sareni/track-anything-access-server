@@ -80,7 +80,9 @@ async function initGlobalAccessList() {
     globalAccessList = {};
     if(users) {
         users.forEach((user) => {
-            globalAccessList[user.account] = PLAN_PROPERTIES[user.plan].trackAmount;
+            if (user.plan) {
+                globalAccessList[user.account] = PLAN_PROPERTIES[user.plan].trackAmount;
+            }
         })
     }
 }
